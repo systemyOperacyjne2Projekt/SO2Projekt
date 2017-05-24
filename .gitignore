@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+so2.creator.user
+so2.files
+so2.includes
+SO2.config
+SO2.creator
+SO2.files
+SO2.includes
+

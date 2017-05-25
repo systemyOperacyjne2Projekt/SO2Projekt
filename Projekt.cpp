@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "interfacepionek.h"
+#include "plansza.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -17,10 +17,10 @@ int main(int argc, char *argv[])
     }
     std::cout << std::endl;
 
-    const auto rozimar_x = argv[1];
-    const auto rozimaryx = argv[2];
+    const int rozimar_x = std::stoi(argv[1]);
+    const int rozimar_y = std::stoi(argv[2]);
 
-    std::vector<std::vector<IPionek *>> macierz;
+    Plansza l_plansza = Plansza(rozimar_x, rozimar_y);
 
     return 0;
 }

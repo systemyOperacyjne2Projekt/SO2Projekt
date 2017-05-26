@@ -1,6 +1,7 @@
 #include "plansza.hpp"
 #include "pustepole.h"
 #include "pionek.h"
+#include "iostream"
 
 
 Plansza::Plansza(int rozimar_x, int rozimar_y)
@@ -48,7 +49,7 @@ void Plansza::przesynPionki()
             int pozycja_x = macierz.size() - 1 - i;
             int pozycja_y = macierz.at(pozycja_x).size() - 1 -j;
 
-            if(!(pozycja_y == pozycja_x == 0))
+            if(!((pozycja_y == 0) && (pozycja_x == 0)))
             {
                 if(pozycja_y == 0)
                 {
@@ -56,7 +57,7 @@ void Plansza::przesynPionki()
                 }
                 else
                 {
-                    macierz.at(pozycja_x).at(pozycja_y) = macierz.at(pozycja_x).at(pozycja_y);
+                    macierz.at(pozycja_x).at(pozycja_y) = macierz.at(pozycja_x).at(pozycja_y - 1);
                }
             }
             else

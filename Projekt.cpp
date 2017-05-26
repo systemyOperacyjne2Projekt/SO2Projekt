@@ -8,6 +8,7 @@
 #include <mutex>
 
 
+Plansza * g_plansza;
 std::queue<int> kolejka_X;
 std::queue<int> kolejka_Y;
 std::mutex mx;
@@ -16,7 +17,7 @@ void producent(const int rozimar_x, const int rozimar_y)
 {
     while(true)
     {
-        //std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         std::lock_guard<std::mutex> lock(mx);
         auto wyloswowany_x = std::rand() % rozimar_x;
         kolejka_X.push(wyloswowany_x);
@@ -25,6 +26,21 @@ void producent(const int rozimar_x, const int rozimar_y)
     }
 }
 
+void przetwarzacz()
+{
+    while(true)
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::lock_guard<std::mutex> lock(mx); // mx.lock()
+        if ((!kolejka_X.empty()) && (!kolejka_Y.empty()))
+        {
+            g_plansza->dodajPionka(kolejka_X.front(), kolejka_Y.front());
+            kolejka_X.pop();
+            kolejka_Y.pop();
+        }
+        g_plansza->przesynPionki();
+    }
+}
 
 
 int main(int argc, char *argv[])
@@ -45,13 +61,14 @@ int main(int argc, char *argv[])
     const int rozimar_x = std::stoi(argv[1]);
     const int rozimar_y = std::stoi(argv[2]);
 
-    Plansza l_plansza = Plansza(rozimar_x, rozimar_y);
+    g_plansza = new Plansza(rozimar_x, rozimar_y);
 
 
     srand (time(NULL));
 
     std::vector<std::thread> threads;
     threads.push_back(std::thread( producent, rozimar_x, rozimar_y));
+    threads.push_back(std::thread( przetwarzacz));
 
 
     for (auto & thread : threads)

@@ -14,6 +14,8 @@ public:
 
     void przesynPionki();
 
+    void drukuj();
+
 private:
 
     std::vector<std::vector<IPionek *>> macierz;

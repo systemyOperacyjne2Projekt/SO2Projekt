@@ -68,3 +68,16 @@ void Plansza::przesynPionki()
     }
 }
 
+void Plansza::drukuj()
+{
+    for(const auto & linia : macierz)
+    {
+        for(const auto & komorka : linia)
+        {
+            std::cout << komorka->pobierzObraz();
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+}
+

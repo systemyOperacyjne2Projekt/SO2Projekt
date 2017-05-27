@@ -42,6 +42,16 @@ void przetwarzacz()
     }
 }
 
+void drukuj()
+{
+    while(true)
+    {        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::lock_guard<std::mutex> lock(mx); // mx.lock()
+        g_plansza->drukuj();
+    }
+}
+
+
 
 int main(int argc, char *argv[])
 {
@@ -69,6 +79,8 @@ int main(int argc, char *argv[])
     std::vector<std::thread> threads;
     threads.push_back(std::thread( producent, rozimar_x, rozimar_y));
     threads.push_back(std::thread( przetwarzacz));
+    threads.push_back(std::thread( drukuj));
+
 
 
     for (auto & thread : threads)

@@ -17,7 +17,7 @@ void producent(const int rozimar_x, const int rozimar_y)
 {
     while(true)
     {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        //std::this_thread::sleep_for(std::chrono::seconds(1));
         std::lock_guard<std::mutex> lock(mx);
         auto wyloswowany_x = std::rand() % rozimar_x;
         kolejka_X.push(wyloswowany_x);
@@ -30,7 +30,7 @@ void przetwarzacz()
 {
     while(true)
     {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        //std::this_thread::sleep_for(std::chrono::seconds(1));
         std::lock_guard<std::mutex> lock(mx); // mx.lock()
         if ((!kolejka_X.empty()) && (!kolejka_Y.empty()))
         {

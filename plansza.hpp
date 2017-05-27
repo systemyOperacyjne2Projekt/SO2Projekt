@@ -10,13 +10,16 @@ public:
 
     void dodajPionka(int pozycja_x, int pozycja_y);
 
-    void wyczyscPlansze();
 
     void przesynPionki();
 
     void drukuj();
 
 private:
+    void wyczyscPlansze();
 
     std::vector<std::vector<IPionek *>> macierz;
+    int max;
+    int limit;
+    int licznik;
 };

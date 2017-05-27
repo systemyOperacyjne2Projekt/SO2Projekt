@@ -5,6 +5,9 @@
 
 
 Plansza::Plansza(int rozimar_x, int rozimar_y)
+   : max(rozimar_x*rozimar_y),
+     limit(0.5 * max),
+     licznik(0)
 {
     for(auto i = 0 ; i < rozimar_x; i ++)
     {
@@ -18,9 +21,15 @@ Plansza::Plansza(int rozimar_x, int rozimar_y)
 
 void Plansza::dodajPionka(int pozycja_x, int pozycja_y)
 {
+    if(licznik> limit)
+    {
+        licznik = 0;
+        wyczyscPlansze();
+    }
     auto pole = macierz.at(pozycja_x).at(pozycja_y);
     delete pole;
     macierz.at(pozycja_x).at(pozycja_y) = new Pionek();
+    licznik++;
 }
 
 void Plansza::wyczyscPlansze()

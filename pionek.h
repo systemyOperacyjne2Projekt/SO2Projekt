@@ -4,11 +4,11 @@ struct Pionek : IPionek
 {
     void drukuj() const override
     {
-        init_pair( 2, COLOR_RED, COLOR_BLACK ); //3
-        attron( COLOR_PAIR( 2 ) ); //4
-        attron( A_BOLD );
-        printw("A");
-        attroff( A_BOLD);
+        init_pair( 2, COLOR_RED, COLOR_BLACK ); //stworzenie pary kolorow o nr 2
+        attron( COLOR_PAIR( 2 ) ); //wybrenie pary kolorow o nr 2
+        attron( A_BOLD ); // wlaczenie pogrubienie
+        printw("A"); // symbol pionka
+        attroff( A_BOLD); // wy?aczenie pogrubiania
         attroff( COLOR_PAIR( 2 ) ); //Wy??czenie koloru tekstu
         refresh();
     }

@@ -2,7 +2,7 @@
 #include "pustepole.h"
 #include "pionek.h"
 #include "iostream"
-
+#include "ncurses.h"
 
 Plansza::Plansza(int rozimar_x, int rozimar_y)
    : max(rozimar_x*rozimar_y),
@@ -40,7 +40,6 @@ void Plansza::wyczyscPlansze()
         {
             auto pole = macierz.at(i).at(j);
             delete pole;
-
             macierz.at(i).at(j) = new PustePole();
         }
     }
@@ -79,14 +78,28 @@ void Plansza::przesynPionki()
 
 void Plansza::drukuj()
 {
+    clear();
+    init_pair( 1, COLOR_GREEN, COLOR_BLACK );
+    attron( COLOR_PAIR( 1 ) );
+    printw("  ");
+
+
+    for(int i = 0 ; i < macierz.at(0).size(); i++)
+    {
+        printw("-");
+    }
+    printw("\n");
+
     for(const auto & linia : macierz)
     {
+        printw("| ");
+        attroff( COLOR_PAIR( 1 ) );
+
         for(const auto & komorka : linia)
         {
-            std::cout << komorka->pobierzObraz();
+            komorka->drukuj();
         }
-        std::cout << std::endl;
+        printw("\n");
     }
-    std::cout << std::endl;
 }
 

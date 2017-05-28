@@ -1,8 +1,11 @@
+#include <ncurses.h>
+
 struct PustePole : IPionek
 {
-    std::string pobierzObraz() const override
+    void drukuj() const override
     {
-        return "#";
+        printw("#");
+        refresh();
     }
 };
 

@@ -6,6 +6,8 @@
 #include <queue>
 #include <thread>
 #include <mutex>
+#include <ncurses.h>
+
 
 
 Plansza * g_plansza;
@@ -20,8 +22,9 @@ void producent(const int rozimar_x, const int rozimar_y)
         //std::this_thread::sleep_for(std::chrono::seconds(1));
         std::lock_guard<std::mutex> lock(mx);
         auto wyloswowany_x = std::rand() % rozimar_x;
-        kolejka_X.push(wyloswowany_x);
         auto wyloswowany_y =  std::rand() % rozimar_y ;
+
+        kolejka_X.push(wyloswowany_x);
         kolejka_Y.push(wyloswowany_y);
     }
 }
@@ -44,11 +47,15 @@ void przetwarzacz()
 
 void drukuj()
 {
+    initscr();
+    start_color();
     while(true)
-    {        std::this_thread::sleep_for(std::chrono::seconds(1));
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(2));
         std::lock_guard<std::mutex> lock(mx); // mx.lock()
         g_plansza->drukuj();
     }
+    endwin();
 }
 
 

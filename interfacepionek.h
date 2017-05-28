@@ -3,5 +3,5 @@
 struct IPionek
 {
     virtual ~IPionek(){}
-    virtual std::string pobierzObraz() const = 0;
+    virtual void drukuj() const = 0;
 };

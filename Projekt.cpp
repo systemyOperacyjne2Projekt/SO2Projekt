@@ -15,10 +15,9 @@ std::mutex mx;
 
 void producent(const int rozimar_x, const int rozimar_y)
 {
-    while(true)//nieskonczona petla
+    while(true)
     {
         //std::this_thread::sleep_for(std::chrono::seconds(1));
-        //lososwanie 2 liczb oraz dodawanie ich do kolejki
         std::lock_guard<std::mutex> lock(mx);
         auto wyloswowany_x = std::rand() % rozimar_x;
         auto wyloswowany_y =  std::rand() % rozimar_y ;
@@ -30,15 +29,14 @@ void producent(const int rozimar_x, const int rozimar_y)
 
 void przetwarzacz()
 {
-    while(true)//nieskonczona petla
+    while(true)
     {
         //std::this_thread::sleep_for(std::chrono::seconds(1));
-        std::lock_guard<std::mutex> lock(mx); // mx.lock()
+        std::lock_guard<std::mutex> lock(mx);
         if ((!kolejka_X.empty()) && (!kolejka_Y.empty()))
         {
-            // w przypadku gdy obie kolejki zawieraja jakies liczby dodanie nowego pionka na planszy
             g_plansza->dodajPionka(kolejka_X.front(), kolejka_Y.front());
-            kolejka_X.pop();// usuniecie liczb z kolejki
+            kolejka_X.pop();
             kolejka_Y.pop();
         }
         g_plansza->przesynPionki();
@@ -47,24 +45,24 @@ void przetwarzacz()
 
 void drukuj()
 {
-    initscr();//inicjalizacja dla biblioteki ncurses
-    start_color();// wlaczenie kolorowania
-    while(true)//nieskonczona petla
+    initscr();
+    start_color();
+    while(true)
     {
-        std::this_thread::sleep_for(std::chrono::seconds(2));
-        std::lock_guard<std::mutex> lock(mx); // mx.lock()
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::lock_guard<std::mutex> lock(mx);
         g_plansza->drukuj();
     }
-    endwin();// wy?aczenie  biblioteki ncurses
+    endwin();
 }
 
 
 
 int main(int argc, char *argv[])
 {
-    if(argc != 3)// sprawdzanie ilosci parametrow wejsciowych
+    if(argc != 3)
     {
-        std::cout << "Bledne parametry wejsciowe";
+        std::cout << "Bledne parametry wejsciowe" << std::endl;
         return 0;
     }
 
@@ -78,18 +76,18 @@ int main(int argc, char *argv[])
     const int rozimar_x = std::stoi(argv[1]);
     const int rozimar_y = std::stoi(argv[2]);
 
-    g_plansza = new Plansza(rozimar_x, rozimar_y); // stworzenie macierzy
+    g_plansza = new Plansza(rozimar_x, rozimar_y);
 
-    srand (time(NULL));// uruchomienie czasu dla - niezbedne do losowania
+    srand (time(NULL));
 
-    std::vector<std::thread> threads; // stworzenie vectora watkow oraz dodanie 3 watkow
+    std::vector<std::thread> threads;
     threads.push_back(std::thread( producent, rozimar_x, rozimar_y));
     threads.push_back(std::thread( przetwarzacz));
     threads.push_back(std::thread( drukuj));
 
     for (auto & thread : threads)
     {
-        thread.join(); // synchronizacja watkow
+        thread.join();
     }
 
     return 0;

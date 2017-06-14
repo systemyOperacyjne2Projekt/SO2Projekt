@@ -1,4 +1,3 @@
-
 #include "interfacepionek.h"
 #include <vector>
 

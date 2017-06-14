@@ -12,5 +12,4 @@ struct Pionek : IPionek
         attroff( COLOR_PAIR( 2 ) );
         refresh();
     }
-
 };

@@ -90,7 +90,6 @@ void Plansza::drukuj()
     printw("\n");
     attroff( COLOR_PAIR( 1 ) );
 
-
     for(const auto & linia : macierz)
     {
         attron( COLOR_PAIR( 1 ) );
